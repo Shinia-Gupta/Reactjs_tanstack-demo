@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import { useQuery } from '@tanstack/react-query'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
+  //useQuery is a function that takes in one primary argument that is an object. This object needs 2 properties to work properly.
+  // The first property is a query key which is going to be an array. It is used for refetching data and caching data. It needs to be unique so that we know which query we are referencing. If it is not unique, lets say another query uses the exact same key, then queryclient will bot be able to distinguish between the 2 of them
+// The second property of this useQuery is a query Function denoted as queryFn. This is the function that will run whenever we run the query with this key. This is the function where we would put our API call 
+
+const {data}=useQuery({
+  queryKey:['todos'],
+  queryFn:getTodos
+
+})
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    hii
+    <div>{JSON.stringify(data.slice(0,10))}</div>
     </>
   )
 }
 
+const getTodos=async()=>{
+  const response=await fetch("https://jsonplaceholder.typicode.com/todos")
+  return await response.json()
+}
 export default App
