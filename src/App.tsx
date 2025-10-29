@@ -8,7 +8,7 @@ function App() {
   // The first property is a query key which is going to be an array. It is used for refetching data and caching data. It needs to be unique so that we know which query we are referencing. If it is not unique, lets say another query uses the exact same key, then queryclient will bot be able to distinguish between the 2 of them
 // The second property of this useQuery is a query Function denoted as queryFn. This is the function that will run whenever we run the query with this key. This is the function where we would put our API call 
 
-const {data, isPending,refetch}=useQuery({
+const {data, isPending,refetch, isFetching}=useQuery({
   queryKey:['todos'],
   queryFn:getTodos
 
@@ -16,7 +16,7 @@ const {data, isPending,refetch}=useQuery({
   return (
     <>
     
-    <div>{isPending?"Loading data":JSON.stringify(data.slice(0,10))}</div>
+    <div>{isFetching?"Loading data":JSON.stringify(data.slice(0,10))}</div>
 
     {/* Refresh the query whenever we click it */}
     <button onClick={()=>refetch()}>Refetch</button>
@@ -29,3 +29,5 @@ const getTodos=async()=>{
   return await response.json()
 }
 export default App
+
+
