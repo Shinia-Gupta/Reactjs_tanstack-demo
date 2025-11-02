@@ -17,7 +17,7 @@ if(error){
   return (
     <>
     
-    <div>{isPending?"Loading data":JSON.stringify(data.slice(0,10))}</div>
+    <div>{isPending?"Loading data":JSON.stringify(data?.slice(0,10))}</div>
 
     {/* Refresh the query whenever we click it */}
     <button onClick={()=>refetch()}>Refetch</button>
